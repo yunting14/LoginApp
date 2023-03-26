@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<head>
+    <title>Welcome</title>
+</head>
+<style>
+    .middle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+</style>
+
+<body>
+    <div>
+        <div class="middle" th:object="${user}">
+            <h1 class="w3-jumbo w3-animate-top">Your Information</h1>
+            <span>
+                <h4>Name: </h4><h4 th:text="${user.name}"></h4>
+            </span>
+            <span>
+                <h4>Email: </h4><h4 th:text="${user.email}"></h4>
+            </span>
+            <span>
+                <h4>Role: </h4><h4 th:text="${user.role}"></h4>
+            </span>
+            <div th:if="${#strings.toString(user.role) == 'MANAGER'}">
+                <a th:href="@{/manager}">Information for Managers</a>
+            </div>
+            <br>
+            <a th:href="@{/logout}">Logout</a>
+        </div>
+    </div>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<head>
+    <title>Manager</title>
+</head>
+<style>
+    .middle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+</style>
+
+<body>
+    <div>
+        <div class="middle" th:object="${user}">
+            <h1 class="w3-jumbo w3-animate-top">Restricted</h1>
+            <h4>This is information is only available to managers</h4>
+            <br>
+            <a th:href="@{/logout}">Logout</a>
+        </div>
+    </div>
