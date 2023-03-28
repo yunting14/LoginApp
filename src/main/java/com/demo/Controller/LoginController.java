@@ -1,5 +1,8 @@
 package com.demo.Controller;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.demo.Model.User;
 import com.demo.Service.UserService;
@@ -49,12 +54,11 @@ public class LoginController {
         else{
             User userFromDb = userService.findUserByEmail(user.getEmail());
             httpSession.setAttribute("userInSession", userFromDb);
-            model.addAttribute("user", userFromDb);
-            return "Home";
+            return "redirect:/home";
         }
     }
 
-    @GetMapping("logout")
+    @GetMapping("/logout")
     public String Logout(HttpSession httpSession){
         httpSession.removeAttribute("userInSession");
         return "redirect:/";

@@ -118,11 +118,11 @@ body {
 
 
 <div class="container">
-    <div class="brand-title">Welcome</div>
+    <div class="brand-title" th:text="#{login.title}">Welcome</div>
     <form action="#" th:object="${user}" th:action="@{/login}" method="post">
         <table class="inputs" th:object="${user}">
             <tr>
-                <td><span>Email</span></td>
+                <td><span th:text="#{label.email}">Email</span></td>
                 <td><input type="text" th:field="*{email}"></td>              
             </tr>
 
@@ -133,7 +133,7 @@ body {
             </tr>
 
             <tr>
-                <td><span>Password</span></td>
+                <td><span th:text="#{label.password}">Password</span></td>
                 <td><input type="password" th:field="*{password}"></td>
             </tr>
 
@@ -144,18 +144,21 @@ body {
             <tr>
                 <td></td>
                 <td>
-                    <button type="submit">Submit
-                    <button type="submit">Reset
+                    <button type="submit" th:text="#{login.form.submit}">Submit
                 </td>
             </tr>
             <tr>
                 <td></td>
                 <td colspan="2">
                     <!-- for login message -->
-                    <p style='color:red'><span th:if="${loginMessage != null}" th:text="${loginMessage}"></span></p>
+                    <!-- <p style='color:red'><span th:if="${loginMessage != null}" th:text="${loginMessage}"></span></p> -->
                 </td>
             </tr>
         </table>
     </form>
+    <!-- <div>
+      <a href="/change-language?lang=en" th:text="#{language.english}">English</a> | <a href="/change-language?lang=zh" th:text="#{language.chinese}"></a>
+    </div> -->
+  </div>
 </body>
 </html>

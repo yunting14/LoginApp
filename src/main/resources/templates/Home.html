@@ -19,20 +19,25 @@
 <body>
     <div>
         <div class="middle" th:object="${user}">
-            <h1 class="w3-jumbo w3-animate-top">Your Information</h1>
+            <h1 class="w3-jumbo w3-animate-top" th:text="#{home.title}">Your Info</h1>
             <span>
-                <h4>Name: </h4><h4 th:text="${user.name}"></h4>
+                <h4 th:text="#{label.name} + ': ' + ${user.name}">Name:</h4>
             </span>
             <span>
-                <h4>Email: </h4><h4 th:text="${user.email}"></h4>
+                <h4 th:text="#{label.email} + ': ' + ${user.email}">Email:</h4>
             </span>
             <span>
-                <h4>Role: </h4><h4 th:text="${user.role}"></h4>
+                <h4 th:text="#{label.role} + ': ' + ${user.role}">Role: </h4>
             </span>
             <div th:if="${#strings.toString(user.role) == 'MANAGER'}">
-                <a th:href="@{/manager}">Information for Managers</a>
+                <a th:href="@{/manager}" th:text="#{home.message.info_manager}">Info for Managers</a>
             </div>
             <br>
-            <a th:href="@{/logout}">Logout</a>
+            <a th:href="@{/logout}" th:text="#{home.message.logout}">log out</a>
+            <br>
+            <br>
+            <div>
+                <a th:href="@{/home(lang=en)}" th:text="#{language.english}">English</a> | <a th:href="@{/home(lang=zh)}" th:text="#{language.chinese}"></a>
+            </div>
         </div>
     </div>
