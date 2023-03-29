@@ -25,8 +25,8 @@ public class DemoApplication {
 	@Bean
 	CommandLineRunner loadData(UserService userService){
 		return (args) -> {
-			User user1 = new User("larry.lee@abc.com", "employee", "Larry Lee", RoleEnum.EMPLOYEE);
-			User user2 = new User("tom.tan@abc.com", "manager", "Tom Tan", RoleEnum.MANAGER);
+			User user1 = new User("larry.lee@abc.com", "password", "Larry Lee", RoleEnum.EMPLOYEE);
+			User user2 = new User("tom.tan@abc.com", "password", "Tom Tan", RoleEnum.MANAGER);
 
 			userService.saveUser(user1);
 			userService.saveUser(user2);

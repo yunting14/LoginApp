@@ -10,6 +10,6 @@ Email: larry.lee@abc.com | Password: password
 ## Features
 * Manager's restricted page with interceptor to prevent direct URL access
 * Chinese and English option
-* Login validation and error messages
+* Login validation and error messages. Implemented server-side session. 
 * Database: h2
 * MVC with Service Interfaces
