@@ -21,14 +21,14 @@
         <div class="middle" th:object="${user}">
             <h1 class="w3-jumbo w3-animate-top" th:text="#{manager.title}">Restricted</h1>
             <h4 th:text="#{manager.message}">manager's info</h4>
-            <a th:href="@{/home}" th:text="#{page.back}"></a>
+            <a th:href="@{/home/all}" th:text="#{page.back}"></a>
             <br>
             <br>
             <a th:href="@{/logout}" th:text="#{home.message.logout}">Logout</a>
             <br>
             <br>
             <div>
-                <a th:href="@{/manager(lang=en)}" th:text="#{language.english}"></a> | <a th:href="@{/manager(lang=zh)}" th:text="#{language.chinese}"></a>
+                <a th:href="@{/home/manager(lang=en)}" th:text="#{language.english}"></a> | <a th:href="@{/home/manager(lang=zh)}" th:text="#{language.chinese}"></a>
             </div>
         </div>
     </div>

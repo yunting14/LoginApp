@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -21,11 +23,11 @@ public class SecurityInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        HttpSession session = request.getSession();
-        User userInSession = (User) session.getAttribute("userInSession");
-
-        if (uri.startsWith("/manager")){
-            if (userInSession == null || !"MANAGER".equals(userInSession.getRole().toString())){
+        if (uri.startsWith("/home/manager")){
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            Boolean isManager = auth.getAuthorities().stream()
+                                .anyMatch(a -> a.getAuthority().equals("ROLE_MANAGER"));
+            if (!isManager){
                 response.sendRedirect("/");
                 return true;
             }

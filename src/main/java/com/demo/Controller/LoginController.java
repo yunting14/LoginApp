@@ -63,7 +63,9 @@ public class LoginController {
 
     @GetMapping("/logout")
     public String Logout(HttpSession httpSession){
-        httpSession.removeAttribute("userInSession");
+        // httpSession.removeAttribute("userInSession");
+        SecurityContextHolder.clearContext();
+        httpSession.invalidate();
         return "redirect:/";
     }
 }

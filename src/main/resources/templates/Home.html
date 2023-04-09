@@ -30,14 +30,14 @@
                 <h4 th:text="#{label.role} + ': ' + ${user.role}">Role: </h4>
             </span>
             <div th:if="${#strings.toString(user.role) == 'MANAGER'}">
-                <a th:href="@{/manager}" th:text="#{home.message.info_manager}">Info for Managers</a>
+                <a th:href="@{/home/manager}" th:text="#{home.message.info_manager}">Info for Managers</a>
             </div>
             <br>
             <a th:href="@{/logout}" th:text="#{home.message.logout}">log out</a>
             <br>
             <br>
             <div>
-                <a th:href="@{/home(lang=en)}" th:text="#{language.english}">English</a> | <a th:href="@{/home(lang=zh)}" th:text="#{language.chinese}"></a>
+                <a th:href="@{/home/all(lang=en)}" th:text="#{language.english}">English</a> | <a th:href="@{/home/all(lang=zh)}" th:text="#{language.chinese}"></a>
             </div>
         </div>
     </div>

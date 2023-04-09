@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.demo.Model.RoleEnum;
 import com.demo.Model.User;
@@ -23,13 +24,11 @@ public class DemoApplication {
 	}
 
 	@Bean
-	CommandLineRunner loadData(UserService userService){
+	CommandLineRunner loadData(UserService userService, PasswordEncoder encoder){
 		return (args) -> {
-
-			// $2a$10$XaLFtKouE/P5Udpi0wOEQem/FnOHFtPaZ66560hdIwh0JqFHIXFc2
 			 
-			User user1 = new User("larry.lee@abc.com", "password", "Larry Lee", RoleEnum.EMPLOYEE);
-			User user2 = new User("tom.tan@abc.com", "password", "Tom Tan", RoleEnum.MANAGER);
+			User user1 = new User("larry.lee@abc.com", encoder.encode("password"), "Larry Lee", RoleEnum.EMPLOYEE);
+			User user2 = new User("tom.tan@abc.com", encoder.encode("password"), "Tom Tan", RoleEnum.MANAGER);
 
 			userService.saveUser(user1);
 			userService.saveUser(user2);

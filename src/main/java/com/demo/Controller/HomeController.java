@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,7 @@ import com.demo.Model.User;
 import com.demo.Service.UserService;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/home")
 public class HomeController {
 
     @Autowired
@@ -31,7 +32,7 @@ public class HomeController {
     }
     //
 
-    @GetMapping("/home")
+    @GetMapping("/all")
     public String GoToHomePage(Model model, HttpSession httpSession){
         // User user = (User)httpSession.getAttribute("userInSession");
         
@@ -49,8 +50,17 @@ public class HomeController {
         return "Home";
     }
     
+    @PreAuthorize("hasAuthority('ROLE_MANAGER')")
     @GetMapping("/manager")
     public String GetManagerInfo(){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isManager = auth.getAuthorities().stream()
+                                .anyMatch(a -> a.getAuthority().equals("ROLE_MANAGER"));
+        boolean isAuth = auth.isAuthenticated();
+        System.out.println("Is Manager? : " + isManager);
+        System.out.println("Is Authenticated? : " + isAuth);
+
         return "Manager";
     }
 }

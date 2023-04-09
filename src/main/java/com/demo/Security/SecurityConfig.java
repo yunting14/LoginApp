@@ -8,19 +8,25 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.demo.Model.RoleEnum;
 
 @EnableWebSecurity
 @Deprecated
+@EnableGlobalMethodSecurity(prePostEnabled=true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Autowired
@@ -30,35 +36,35 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // BCryptPasswordEncoder encoder;
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        // String encoded = encoder.encode("password");
-        // System.out.println("encoded:::::::::::::::"+encoded);
+    UserDetailsService userDetailServiceImpl;
 
-        auth.jdbcAuthentication().dataSource(dataSource)
-            .passwordEncoder(encoder)
-            .usersByUsernameQuery("select email, password, 'true' as enabled from company_user where email=?")
-            .authoritiesByUsernameQuery("select email, user_role, 'true' as enabled from company_user where email=?");
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+        auth.userDetailsService(userDetailServiceImpl);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
 
         // for h2 access
-        http.csrf().disable();
+        http.csrf().ignoringAntMatchers("/h2-console/**");
         http.headers().frameOptions().disable();
 
-        //
         http
             .authorizeRequests()
                 .antMatchers("/", "/h2-console/**").permitAll()
-                // .antMatchers("/manager*").hasAuthority("MANAGER")
+                .antMatchers("/home/manager*").hasAuthority("ROLE_MANAGER")
                 .antMatchers("/**").fullyAuthenticated()
             .and()
             .formLogin().loginPage("/")
             .usernameParameter("email").passwordParameter("password")
             .loginProcessingUrl("/login")
-            .defaultSuccessUrl("/home", true)
+            .defaultSuccessUrl("/home/all", true)
             .failureUrl("/accessDenied")
             .and()
             .logout().logoutUrl("/logout")
