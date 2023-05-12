@@ -1,4 +1,4 @@
-# Login Application
+# Login Application with Spring Security
 Written using spring boot
 
 ## Branches
