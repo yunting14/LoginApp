@@ -5,8 +5,8 @@ Written using spring boot
 1. Main
     * All features except for password encryption
 2. Spring-security
-    * Password encryption done; integrating all features with spring security
-    * I attempted to integrate the industry-standard Spring Security framework for this challenge after completing a basic version. 1 bug fixing in progress (displaying error message during login)
+    * Password encryption done; integrated all features with spring security
+    * 1 bug fixing in progress: displaying error message during login
 
 ## Features
 * Manager's restricted page with interceptor to prevent direct URL access
